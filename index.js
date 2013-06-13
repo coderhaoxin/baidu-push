@@ -6,8 +6,6 @@ var querystring = require('querystring');
 var PROTOCOL_SCHEMA = 'http://';
 var SERVER_HOST = 'channel.api.duapp.com';
 var COMMON_PATH = '/rest/2.0/channel/';
-//var URL_HEADER = PROTOCOL_SCHEMA + SERVER_HOST;
-var debug = true;
 /*
  * error message
  */
@@ -162,10 +160,8 @@ function request(bodyArgs, path, sk, id, host, cb) {
     });
 
     req.on('error', function (e) {
-        if (debug) {
-            console.log('error : ' + util.inspect(e));
-        }
-        cb(e, null);
+      console.log('error : ' + util.inspect(e));
+      cb(e, null);
     });
     req.write(bodyStr);
     req.end();
@@ -185,11 +181,11 @@ function checkOptions(options, must){
 
   function checkType(type, condition) {
     for (var i = 0; i < condition.length; i++) {
-  	  if (type === condition[i]) {
-  	  	return true
-  	  }
-  	}
-  	return false;
+      if (type === condition[i]) {
+        return true
+      }
+    }
+    return false;
   }
 
   if (options['user_id'] && !(typeof options['user_id'] === 'string' && options['user_id'].length <= 256)) {
@@ -277,7 +273,7 @@ Push.prototype.queryBindList = function (options, cb) {
   }
 
   if (!options) {
-  	options = {}
+    options = {}
   }
 
   for (var i in options) {
@@ -326,21 +322,21 @@ Push.prototype.pushMsg = function (options, cb) {
   }
 
   if (!options) {
-  	options = {}
+    options = {}
   }
 
   for (var i in options) {
-  	if (options.hasOwnProperty(i)) {
-  		opt[i] = options[i];
-  	}
+    if (options.hasOwnProperty(i)) {
+      opt[i] = options[i];
+    }
   }
 
   var must = ['push_type', 'messages', 'msg_keys'];
 
   if (opt['push_type'] === 1) {
-  	must.push('user_id');
+    must.push('user_id');
   } else if (opt['push_type'] === 2) {
-  	must.push('tag');
+    must.push('tag');
   } else {
   }
 
